@@ -5,6 +5,7 @@ import { TEventList } from '../../api/types/eventList';
 import { Pagenation } from './Pagenation';
 import { Alert } from '../../utils/alert';
 import { useNavigate } from 'react-router-dom';
+import { dDayForm } from '../../utils/functions/dateForm';
 
 type TProps = {
     list: TEventList[] | [];
@@ -26,11 +27,17 @@ export const ListCont = ({
         item.eventName.toLowerCase().includes(searchKeyword.toLowerCase())
     );
 
+    const sortedList = filteredList.slice().sort((a: TEventList, b: TEventList) => {
+        const dDayA = dDayForm(a.date);
+        const dDayB = dDayForm(b.date);
+        return dDayA - dDayB;
+    });
+
     const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
     const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-    const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = sortedList.slice(indexOfFirstItem, indexOfLastItem);
 
-    const totalPages = Math.ceil(list.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(sortedList.length / ITEMS_PER_PAGE);
 
     const handleDelete = () => {
         Alert.warning({
@@ -44,6 +51,15 @@ export const ListCont = ({
     }
     const handleClick = () => {
         navigate("/detail", {state: {"type": "detail"}})
+    }
+    const handleDDay = (day: string): string => {
+        const dDay = dDayForm(day)
+        if(dDay > 0){
+            return `D-${dDay}`
+        }else{
+            const count = Math.abs(dDay);
+            return `D+${count}`
+        }
     }
 
     return (
@@ -59,9 +75,9 @@ export const ListCont = ({
                         </tr>
                     </thead>
                     <tbody className='text-center'>
-                        {currentItems?.length !== 0 ? currentItems?.map((item: TEventList, key) => (
-                            <tr className='cursor-pointer hover:bg-[#e7a8843e] border-b-[1px] border-solid border-[#cecece]' key={item.id} onClick={handleClick}>
-                                <td>D-10723</td>
+                        {currentItems?.length !== 0 ? currentItems?.map((item: TEventList) => (
+                            <tr className={`${dDayForm(item.date) < 0 && "bg-[#bdbdbdad] border-[#b3b3b3] hover:bg-[#bdbdbdad]"} cursor-pointer hover:bg-[#e7a8843e] border-b-[1px] border-solid border-[#cecece]`} key={item.id} onClick={handleClick}>
+                                <td>{handleDDay(item.date)}</td>
                                 <td>{item.eventName}</td>
                                 <td>{item.date}</td>
                                 <td>{item.time}</td>
