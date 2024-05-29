@@ -7,9 +7,12 @@ import { SearchInput } from '../components/EventList/SearchInput';
 import { AxiosResponse } from 'axios';
 import { TEventList } from '../api/types/eventList';
 import { DatePickerCont } from '../components/common/DatePickerCont';
+import { CustomButton } from '../components/common/CustomButton';
+import { useNavigate } from 'react-router-dom';
 
-export const EventList = () => {
+export const EventListScreen = () => {
 
+    const navigate = useNavigate();
     const [list, setList] = useState<TEventList[]>([]);
     const [searchKeyword, setSearchKeyword] = useState('');
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,7 +36,7 @@ export const EventList = () => {
     }, [])
 
     return (
-        <LayoutCont>
+        <LayoutCont width={"100%"}>
             <div className='flex justify-between items-center mb-5'>
                 <span className='text-[#505050] text-[16px]'>[ Total <span className='text-[#000] font-black text-[16px]'>{list?.length}</span> ]</span>
                 <div className='flex justify-end items-center'>
@@ -41,7 +44,18 @@ export const EventList = () => {
                         selectedDate={selectedDate}
                         setSelectedDate={setSelectedDate}
                     />
-                    <button className='px-5 py-1.5 bg-primary text-[14px] rounded-lg ml-2 text-[#4f4f4f]'>검색</button>
+                    <CustomButton
+                        title={"검색"}
+                        onClick={() => {}}
+                        bgColor={"#c4c4c4"}
+                        ml={"10"}
+                    />
+                    <CustomButton
+                        title={"이벤트 등록"}
+                        onClick={() => {navigate("/detail", {state: {"type": "register"}})}}
+                        bgColor={"#e7a8847c"}
+                        ml={"10"}
+                    />
                 </div>
             </div>
             <SearchInput

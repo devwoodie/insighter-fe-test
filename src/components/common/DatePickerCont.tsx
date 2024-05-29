@@ -4,13 +4,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 
 type TProps = {
-    selectedDate: Date | null | undefined
-    setSelectedDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>
+    selectedDate: Date | null | undefined;
+    setSelectedDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
+    disabled?: boolean;
 }
 
 export const DatePickerCont = ({
     selectedDate,
-    setSelectedDate
+    setSelectedDate,
+    disabled
 }: TProps) => {
 
     return (
@@ -29,6 +31,7 @@ export const DatePickerCont = ({
                 onChange={(date) => setSelectedDate(date)}
                 className='custom-date-picker'
                 placeholderText='날짜 검색하기'
+                disabled={disabled}
             />
 
             <style>
@@ -47,6 +50,9 @@ export const DatePickerCont = ({
                     .custom-date-picker::placeholder{
                         font-size: 16px;
                         color: #b4b4b4;
+                    }
+                    .custom-date-picker:disabled{
+                        background-color: #cecece;
                     }
                 `}
             </style>

@@ -43,7 +43,7 @@ export const ListCont = ({
         })
     }
     const handleClick = () => {
-        navigate("/")
+        navigate("/detail", {state: {"type": "detail"}})
     }
 
     return (
@@ -54,7 +54,7 @@ export const ListCont = ({
                     <thead className='border-b-[1px] border-solid border-[#676767]'>
                         <tr>
                             {listHeader?.map((item: TListHeader) => (
-                                <th key={item?.id} className={`w-[${item?.width}%]`}>{item?.title}</th>
+                                <th key={item?.id} style={{width: `${item?.width}%`}}>{item?.title}</th>
                             ))}
                         </tr>
                     </thead>
