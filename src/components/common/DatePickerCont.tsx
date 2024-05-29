@@ -38,7 +38,7 @@ export const DatePickerCont = ({
                 {`
                     .custom-date-picker{
                         background-color: rgb(238, 238, 238);
-                        padding: 4px 10px 4px 20px;
+                        padding: 0.375rem 10px 0.375rem 20px;
                         border-radius: 10px;
                         border: 1px solid rgb(87, 87, 87);
                         outline: none;

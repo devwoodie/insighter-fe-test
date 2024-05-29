@@ -6,6 +6,7 @@ import { DatePickerCont } from '../components/common/DatePickerCont';
 import { CustomButton } from '../components/common/CustomButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CustomBackBtn } from '../components/common/CustomBackBtn';
+import { TimePickerCont } from '../components/common/TimePickerCont';
 
 export const EventDetailScreen = () => {
 
@@ -26,7 +27,7 @@ export const EventDetailScreen = () => {
     return (
         <LayoutCont width={"600px"}>
             <CustomBackBtn />
-            
+
             <DetailCont title={"이벤트명"}>
                 <CustomInput
                     state={eventName}
@@ -43,9 +44,9 @@ export const EventDetailScreen = () => {
                 />
             </DetailCont>
             <DetailCont title={"시간"}>
-                <CustomInput
-                    state={time}
-                    setState={setTime}
+                <TimePickerCont
+                    selectedTime={time}
+                    setSelectedTime={setTime}
                     placeholder={"시간을 선택해주세요."}
                     disabled={isDisabled}
                 />
