@@ -4,4 +4,5 @@ export interface StateType {
 
 export interface UserState {
     searchDate: string | undefined;
+    page: number
 }

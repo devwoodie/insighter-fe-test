@@ -64,3 +64,13 @@ table {
 	font-size: 22px;
 	line-height: 1.2
 }
+.scrollbar-custom::-webkit-scrollbar{
+	width: 6px;
+}
+.scrollbar-custom::-webkit-scrollbar-thumb{
+	background-color: #000;
+	border-radius: 0.5rem;
+}
+.scrollbar-custom::-webkit-scrollbar-track{
+	border-radius: 1rem;
+}

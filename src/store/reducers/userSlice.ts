@@ -3,6 +3,7 @@ import { UserState } from "../types";
 
 const initialState: UserState = {
     searchDate: "",
+    page: 1
 }
 
 export const userSlice = createSlice({
@@ -12,12 +13,15 @@ export const userSlice = createSlice({
         setSearchDate: (state, action) => {
             state.searchDate = action.payload
         },
+        setPage: (state, action) => {
+            state.page = action.payload
+        },
     }
 })
 
 export const {
     setSearchDate,
-
+    setPage
 } = userSlice.actions
 
 export default userSlice.reducer

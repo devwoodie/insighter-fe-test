@@ -8,9 +8,9 @@ import { AxiosResponse } from 'axios';
 import { TEventList } from '../api/types/eventList';
 import { DatePickerCont } from '../components/common/DatePickerCont';
 import { CustomButton } from '../components/common/CustomButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchDate } from '../store/reducers/userSlice';
+import { setPage, setSearchDate } from '../store/reducers/userSlice';
 import { dateForm } from '../utils/functions/dateForm';
 import { StateType } from '../store/types';
 
@@ -18,12 +18,16 @@ export const EventListScreen = () => {
 
     const diapatch = useDispatch();
     const navigate = useNavigate();
+    const locationData = useLocation();
     const [list, setList] = useState<TEventList[]>([]);
     const [searchKeyword, setSearchKeyword] = useState('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [selectedDate, setSelectedDate] = useState<Date | null | undefined>();
+    const maintain: string = locationData?.state?.maintain;
     const searchDate = useSelector((state: StateType) => state.userStore.searchDate);
+    const page = useSelector((state: StateType) => state.userStore.page);
 
+    // GET
     const getEventList = async () => {
         try{
             const res: AxiosResponse<TEventList[]> = await instance.get("/event");
@@ -59,7 +63,11 @@ export const EventListScreen = () => {
         if(searchDate){
             setSelectedDate(new Date(searchDate));
         }
+        maintain && setCurrentPage(page);
     }, [])
+    useEffect(() => {
+        diapatch(setPage(currentPage));
+    }, [currentPage]);
 
     return (
         <LayoutCont width={"100%"}>

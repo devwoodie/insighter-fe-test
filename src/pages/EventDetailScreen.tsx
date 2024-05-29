@@ -17,8 +17,8 @@ export const EventDetailScreen = () => {
 
     const navigate = useNavigate();
     const locationData = useLocation();
-    const type: string = locationData.state.type;
-    const eventId: string = locationData.state.id;
+    const type: string = locationData?.state?.type;
+    const eventId: string = locationData?.state?.id;
     const [eventName, setEventName] = useState<string>("");
     const [date, setDate] = useState<Date | null | undefined>();
     const [time, setTime] = useState<string>("");
