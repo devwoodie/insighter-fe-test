@@ -1,31 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UserState } from "../types";
 
-const initialState = {
-    userId: "",
-    accessToken: "",
-    refreshToken: "",
+const initialState: UserState = {
+    searchDate: "",
 }
 
 export const userSlice = createSlice({
-    name: "userInfo",
+    name: "user",
     initialState,
     reducers: {
-        setId: (state, action) => {
-            state.userId = action.payload
+        setSearchDate: (state, action) => {
+            state.searchDate = action.payload
         },
-        setAccessToken: (state, action) => {
-            state.accessToken = action.payload
-        },
-        setRefreshToken: (state, action) => {
-            state.refreshToken = action.payload
-        }
     }
 })
 
 export const {
-    setId,
-    setAccessToken,
-    setRefreshToken,
+    setSearchDate,
+
 } = userSlice.actions
 
 export default userSlice.reducer

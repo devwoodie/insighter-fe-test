@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { listHeader } from '../../utils/data/formData';
 import { TListHeader } from '../../utils/data/types';
 import { TEventList } from '../../api/types/eventList';
@@ -6,6 +6,8 @@ import { Pagenation } from './Pagenation';
 import { Alert } from '../../utils/alert';
 import { useNavigate } from 'react-router-dom';
 import { dDayForm } from '../../utils/functions/dateForm';
+import { useSelector } from 'react-redux';
+import { StateType } from '../../store/types';
 
 type TProps = {
     list: TEventList[] | [];
@@ -22,11 +24,13 @@ export const ListCont = ({
 }: TProps) => {
 
     const navigate = useNavigate();
+    const searchDate = useSelector((state: StateType) => state.userStore.searchDate);
     const ITEMS_PER_PAGE = 8;
+    
     const filteredList = list.filter((item: TEventList) =>
-        item.eventName.toLowerCase().includes(searchKeyword.toLowerCase())
+        item.eventName.toLowerCase().includes(searchKeyword.toLowerCase()) &&
+        (!searchDate || item.date === searchDate)
     );
-
     const sortedList = filteredList.slice().sort((a: TEventList, b: TEventList) => {
         const dDayA = dDayForm(a.date);
         const dDayB = dDayForm(b.date);
@@ -61,6 +65,10 @@ export const ListCont = ({
             return `D+${count}`
         }
     }
+
+    useEffect(() => {
+
+    }, [searchDate])
 
     return (
         <div>
