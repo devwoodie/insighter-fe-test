@@ -86,6 +86,8 @@ export const ListCont = ({
         const dDay = dDayForm(day)
         if(dDay > 0){
             return `D-${dDay}`
+        }else if(dDay === 0){
+            return `D-day`
         }else{
             const count = Math.abs(dDay);
             return `D+${count}`
@@ -107,7 +109,7 @@ export const ListCont = ({
                     <tbody className='text-center'>
                         {currentItems?.length !== 0 ? currentItems?.map((item: TEventList) => (
                             <tr className={`${dDayForm(item.date) < 0 && "bg-[#bdbdbdad] border-[#b3b3b3] hover:bg-[#bdbdbdad]"} cursor-pointer hover:bg-[#e7a8843e] border-b-[1px] border-solid border-[#cecece]`} key={item.id} onClick={() => handleClick(item.id || "")}>
-                                <td>{handleDDay(item.date)}</td>
+                                <td style={{color: `${dDayForm(item.date) === 0 && "#f54a33"}`}}>{handleDDay(item.date)}</td>
                                 <td>{item.eventName}</td>
                                 <td>{item.date}</td>
                                 <td>{item.time}</td>
