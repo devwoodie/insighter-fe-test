@@ -26,7 +26,7 @@ export const EventListScreen = () => {
 
     const getEventList = async () => {
         try{
-            const res: AxiosResponse<TEventList[]> = await instance.get("eventList.json");
+            const res: AxiosResponse<TEventList[]> = await instance.get("/event");
             if(res.status === 200){
                 setList(res.data);
             }

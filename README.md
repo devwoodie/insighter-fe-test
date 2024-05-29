@@ -1,3 +1,13 @@
+```bash
+npm install
+
+# json sever 실행
+npm run start-json-server
+
+# react 실행
+npm start
+```
+
 ### Skills
 - 코어: typescript, React
 - 상태관리: redux, redux-toolkit

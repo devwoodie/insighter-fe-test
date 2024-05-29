@@ -7,12 +7,18 @@ import { CustomButton } from '../components/common/CustomButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CustomBackBtn } from '../components/common/CustomBackBtn';
 import { TimePickerCont } from '../components/common/TimePickerCont';
+import { TEventList } from '../api/types/eventList';
+import { AxiosResponse } from 'axios';
+import instance from '../api/axios';
+import { Alert } from '../utils/alert';
+import { dateForm } from '../utils/functions/dateForm';
 
 export const EventDetailScreen = () => {
 
     const navigate = useNavigate();
     const locationData = useLocation();
     const type = locationData.state.type;
+    const eventId = locationData.state.id;
     const [eventName, setEventName] = useState<string>("");
     const [date, setDate] = useState<Date | null | undefined>();
     const [time, setTime] = useState<string>("");
@@ -20,9 +26,76 @@ export const EventDetailScreen = () => {
     const [description, setDescription] = useState<string>("");
     const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
+    // POST event
+    const postEvent = async () => {
+        if(eventName === "" || date === (null || undefined) || time === "" || location === "" || description === ""){
+            Alert.error({
+                title: "내용을 확인해주세요.",
+            })
+            return
+        }
+        const eventData = {
+            eventName: eventName,
+            date: dateForm(date),
+            time: time,
+            location: location,
+            description: description
+        }
+        try{
+            const res = await instance.post("/event", eventData);
+            if(res.status === 201){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(err){
+            Alert.error({
+                title: "에러가 발생했습니다."
+            })
+        }
+    }
+    const handleRegister = async () => {
+        Alert.warning({
+            title: "이벤트를 등록하시겠습니까?",
+            action: async (result) => {
+                if(result.isConfirmed){
+                    const boolean = await postEvent();
+                    if(boolean){
+                        Alert.success({
+                            title: "등록이 완료되었습니다.",
+                            action: () => {
+                                navigate("/");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    }
+    const getEventDetail = async () => {
+        try{
+            const res: AxiosResponse<TEventList> = await instance.get(`/event/${eventId}`);
+            console.log(res)
+            if(res.status === 200){
+                setEventName(res.data.eventName);
+                setDate(new Date(res.data.date));
+                setTime(res.data.time);
+                setLocation(res.data.location);
+                setDescription(res.data.description);
+            }
+        }catch(err){
+            Alert.error({
+                title: "에러가 발생했습니다."
+            })
+        }
+    }
+
     useEffect(() => {
-        type === "detail" && setIsDisabled(true);
-    }, [type])
+        if(type === "detail"){
+            setIsDisabled(true); 
+            getEventDetail();
+        }
+    }, [])
 
     return (
         <LayoutCont width={"600px"}>
@@ -73,7 +146,7 @@ export const EventDetailScreen = () => {
                 {type === "register" ?
                     <CustomButton
                         title={"등록하기"}
-                        onClick={() => {}}
+                        onClick={handleRegister}
                         bgColor={"#e7a8847c"}
                     />:
                     <>

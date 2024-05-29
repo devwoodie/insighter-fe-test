@@ -53,8 +53,8 @@ export const ListCont = ({
             }
         })
     }
-    const handleClick = () => {
-        navigate("/detail", {state: {"type": "detail"}})
+    const handleClick = (id: string | number) => {
+        navigate("/detail", {state: {"type": "detail", "id" : id},})
     }
     const handleDDay = (day: string): string => {
         const dDay = dDayForm(day)
@@ -65,10 +65,6 @@ export const ListCont = ({
             return `D+${count}`
         }
     }
-
-    useEffect(() => {
-
-    }, [searchDate])
 
     return (
         <div>
@@ -84,7 +80,7 @@ export const ListCont = ({
                     </thead>
                     <tbody className='text-center'>
                         {currentItems?.length !== 0 ? currentItems?.map((item: TEventList) => (
-                            <tr className={`${dDayForm(item.date) < 0 && "bg-[#bdbdbdad] border-[#b3b3b3] hover:bg-[#bdbdbdad]"} cursor-pointer hover:bg-[#e7a8843e] border-b-[1px] border-solid border-[#cecece]`} key={item.id} onClick={handleClick}>
+                            <tr className={`${dDayForm(item.date) < 0 && "bg-[#bdbdbdad] border-[#b3b3b3] hover:bg-[#bdbdbdad]"} cursor-pointer hover:bg-[#e7a8843e] border-b-[1px] border-solid border-[#cecece]`} key={item.id} onClick={() => handleClick(item.id)}>
                                 <td>{handleDDay(item.date)}</td>
                                 <td>{item.eventName}</td>
                                 <td>{item.date}</td>
