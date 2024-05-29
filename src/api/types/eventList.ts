@@ -1,5 +1,5 @@
 export type TEventList = {
-    id: number,
+    id?: number | string,
     eventName: string,
     date: string,
     time: string,

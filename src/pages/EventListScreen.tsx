@@ -43,8 +43,10 @@ export const EventListScreen = () => {
                 title: "날짜를 선택해주세요."
             })
         }else{
-            const newDate = dateForm(selectedDate);
-            diapatch(setSearchDate(newDate));
+            if(selectedDate instanceof Date){
+                const newDate = dateForm(selectedDate);
+                diapatch(setSearchDate(newDate));
+            }
         }
     }
     const handleReload = () => {
@@ -98,6 +100,7 @@ export const EventListScreen = () => {
                 searchKeyword={searchKeyword}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
+                getEventList={getEventList}
             />
         </LayoutCont>
     )

@@ -17,8 +17,8 @@ export const EventDetailScreen = () => {
 
     const navigate = useNavigate();
     const locationData = useLocation();
-    const type = locationData.state.type;
-    const eventId = locationData.state.id;
+    const type: string = locationData.state.type;
+    const eventId: string = locationData.state.id;
     const [eventName, setEventName] = useState<string>("");
     const [date, setDate] = useState<Date | null | undefined>();
     const [time, setTime] = useState<string>("");
@@ -26,8 +26,8 @@ export const EventDetailScreen = () => {
     const [description, setDescription] = useState<string>("");
     const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-    // POST event
-    const postEvent = async () => {
+    // POST | PUT event
+    const postEvent = async (method: string) => {
         if(eventName === "" || date === (null || undefined) || time === "" || location === "" || description === ""){
             Alert.error({
                 title: "내용을 확인해주세요.",
@@ -35,15 +35,15 @@ export const EventDetailScreen = () => {
             return
         }
         const eventData = {
-            eventName: eventName,
-            date: dateForm(date),
-            time: time,
-            location: location,
-            description: description
-        }
+                eventName: eventName,
+                date: dateForm(date),
+                time: time,
+                location: location,
+                description: description
+            }
         try{
-            const res = await instance.post("/event", eventData);
-            if(res.status === 201){
+            const res =  await (method === "post" ? instance.post("/event", eventData) : instance.put(`/event/${eventId}`, eventData));
+            if(res.status === (method === "post" ? 201 : 200)){
                 return true;
             }else{
                 return false;
@@ -54,17 +54,17 @@ export const EventDetailScreen = () => {
             })
         }
     }
-    const handleRegister = async () => {
+    const handleRegister = async (method: string) => {
         Alert.warning({
-            title: "이벤트를 등록하시겠습니까?",
+            title: method === "post" ? "이벤트를 등록하시겠습니까?" : "이벤트를 수정하시겠습니까?",
             action: async (result) => {
                 if(result.isConfirmed){
-                    const boolean = await postEvent();
+                    const boolean = await postEvent(method);
                     if(boolean){
                         Alert.success({
-                            title: "등록이 완료되었습니다.",
+                            title: method === "post" ? "등록이 완료되었습니다." : "수정이 완료되었습니다.",
                             action: () => {
-                                navigate("/");
+                                method === "post" ? navigate("/") : setIsDisabled(true);
                             }
                         })
                     }
@@ -72,10 +72,10 @@ export const EventDetailScreen = () => {
             }
         })
     }
+    // GET
     const getEventDetail = async () => {
         try{
             const res: AxiosResponse<TEventList> = await instance.get(`/event/${eventId}`);
-            console.log(res)
             if(res.status === 200){
                 setEventName(res.data.eventName);
                 setDate(new Date(res.data.date));
@@ -146,7 +146,7 @@ export const EventDetailScreen = () => {
                 {type === "register" ?
                     <CustomButton
                         title={"등록하기"}
-                        onClick={handleRegister}
+                        onClick={() => handleRegister("post")}
                         bgColor={"#e7a8847c"}
                     />:
                     <>
@@ -164,7 +164,7 @@ export const EventDetailScreen = () => {
                             />
                             <CustomButton
                                 title={"수정"}
-                                onClick={() => {}}
+                                onClick={() => handleRegister("put")}
                                 bgColor={"#e7a8847c"}
                                 ml={"10"}
                             />  
