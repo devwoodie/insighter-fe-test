@@ -27,7 +27,7 @@ export const EventDetailScreen = () => {
     const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
     // POST | PUT event
-    const postEvent = async (method: string) => {
+    const createEvent = async (method: string) => {
         if(eventName === "" || date === (null || undefined) || time === "" || location === "" || description === ""){
             Alert.error({
                 title: "내용을 확인해주세요.",
@@ -59,7 +59,7 @@ export const EventDetailScreen = () => {
             title: method === "post" ? "이벤트를 등록하시겠습니까?" : "이벤트를 수정하시겠습니까?",
             action: async (result) => {
                 if(result.isConfirmed){
-                    const boolean = await postEvent(method);
+                    const boolean = await createEvent(method);
                     if(boolean){
                         Alert.success({
                             title: method === "post" ? "등록이 완료되었습니다." : "수정이 완료되었습니다.",

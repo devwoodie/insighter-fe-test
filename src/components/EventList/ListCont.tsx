@@ -47,7 +47,7 @@ export const ListCont = ({
     const totalPages = Math.ceil(sortedList.length / ITEMS_PER_PAGE);
 
     // DELETE
-    const deleteEvent = async (id: string | number) => {
+    const removeEvent = async (id: string | number) => {
         try{
             const res =  await instance.delete(`/event/${id}`);
             if(res.status === 200){
@@ -66,7 +66,7 @@ export const ListCont = ({
             title: "이 이벤트를 삭제하시겠습니까?",
             action: async (result) => {
                 if(result.isConfirmed){
-                    const boolean = await deleteEvent(id);
+                    const boolean = await removeEvent(id);
                     if(boolean){
                         Alert.success({
                             title: "이벤트가 삭제되었습니다.",

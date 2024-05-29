@@ -1,5 +1,6 @@
 ### [실행 방법]
 ```bash
+# npm 설치
 npm install
 
 # json sever 실행
@@ -39,3 +40,31 @@ npm start
     - 수정 완료 후 수정된 상세 화면 표시(목록으로 이동x)
 - 이벤트 삭제 기능
 - D-day 추가(지난 날짜는 배경색 어둡게 작업)
+
+### Coding Convention
+
+- 함수 선언
+
+  ```
+  // 화살표 함수
+  const action = () => {}
+  ```
+
+- 함수 네이밍
+
+  ```
+  // 생성
+  const createData = () => {}
+  // 수정
+  const updateData = () => {}
+  // 삭제
+  const removeData = () => {}
+  // 조회
+  const getData = () => {}
+
+  // 이벤트 함수: 앞에 handle 붙일것
+  // 클릭
+  const handleClick = () => {}
+  // 변경
+  const handleChange = () => {}
+  ```
