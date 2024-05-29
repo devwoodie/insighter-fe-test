@@ -25,7 +25,6 @@ const error: TSwal = (args) => {
         ...args, 
         confirmButtonText: '확인',
         confirmButtonColor: "#d5bdaf",
-        cancelButtonColor: "#c4c4c4",
         width: 400,
     });
 };
@@ -60,20 +59,5 @@ const confirm: TSwal = (args) => {
     });
 };
 
-const input: TSwal = (args) => {
-    template({
-        input: 'number',
-        inputAttributes: {
-            autocapitalize: 'off'
-        },
-        cancelButtonText: '취소',
-        confirmButtonText: '확인',
-        showCancelButton: true,
-        showLoaderOnConfirm: true,
-        reverseButtons: true,
-        allowOutsideClick: () => !Swal.isLoading(),
-        ...args
-    });
-};
 
-export const Alert = { success, error, warning, confirm, basic, input };
+export const Alert = { success, error, warning, confirm, basic };

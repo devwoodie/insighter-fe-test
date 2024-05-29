@@ -1,3 +1,10 @@
+@font-face {
+	font-family: 'skybori';
+	src: url('../assets/fonts/skybori.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -23,7 +30,6 @@ footer, header, hgroup, menu, nav, section {
 }
 html, body{
 	background-color: #e0e0e0;
-	/* background-color: #e6e6e6; */
 }
 html {
 	scroll-behavior: smooth;
@@ -52,4 +58,9 @@ table {
 * {
     box-sizing: border-box;
     font-size: 18px;
+	font-family: "skybori";
+}
+.swal2-title{
+	font-size: 22px;
+	line-height: 1.2
 }
