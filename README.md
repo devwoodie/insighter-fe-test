@@ -68,3 +68,8 @@ npm start
   // 변경
   const handleChange = () => {}
   ```
+
+
+[ 크롬을 CORS(Cross-Origin Resource Sharing) 오류 없이 여는 명령어 - 보안 취약 ] <br/>
+window: chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security <br/>
+mac: open -na "Google Chrome" --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
